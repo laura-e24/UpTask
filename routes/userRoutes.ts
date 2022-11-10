@@ -23,8 +23,8 @@ router.get('/profile', checkAuth, profile)
 // Esto sólo se puede hacer porque acá tenemos dos verbos distintos
 // apuntando a un mismo endpoint
 router.route('/forgot-password/:token')
-   .get(confirmToken)
-   .post(newPassword)
+  .get(confirmToken)
+  .post(newPassword)
 
 module.exports = router;
 export {}
