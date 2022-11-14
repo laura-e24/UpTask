@@ -1,4 +1,5 @@
 const Project = require('../models/Project.ts')
+const Task = require('../models/Task.ts')
 
 const getAllProjects = async (req, res) => {
   // Obtener SÓLO los proyectos del usuario autenticadod
@@ -20,7 +21,13 @@ const getOneProject = async (req, res) => {
     const error = new Error('Usuario no autorizado.')
     return res.status(401).json({ msg: error.message })
   }
-  res.json(project)
+
+  const tasks = await Task.find().where('project').equals(project._id)
+
+  res.json({
+    project,
+    tasks
+  })
 }
 
 const addProject = async (req, res) => {
@@ -92,10 +99,6 @@ const deleteCollaborator = async (req, res) => {
 
 }
 
-const getAllTasks = async (req, res) => {
-  
-}
-
 module.exports = {
   getAllProjects,
   getOneProject,
@@ -103,6 +106,6 @@ module.exports = {
   updateProject,
   deleteProject,
   addCollaborator,
-  deleteCollaborator,
-  getAllTasks
+  deleteCollaborator
 }
+export {}

@@ -17,12 +17,12 @@ const checkAuth = async (req, res, next) => {
       req.user = await User.findById(decoded.id).select('-password -confirmed -token -createdAt -updatedAt -__v')
       return next()
     } catch (error) {
-      return res.status(404).json({ msg: 'Hubo un error.' })
+      return res.status(401).json({ msg: 'Token inválido.' })
     }
   }
 
   if (!token) {
-    const error = new Error('Token inválido.')
+    const error = new Error('Se requiere iniciar sesión.')
     return res.status(401).json({ msg: error.message })
   }
 

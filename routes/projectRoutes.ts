@@ -2,7 +2,7 @@ const express = require('express')
 const controllers = require('../controllers/projectController.ts')
 const checkAuth = require('../middleware/checkAuth.ts')
 
-const { getAllProjects, getOneProject, addProject, updateProject, deleteProject, addCollaborator, deleteCollaborator, getAllTasks } = controllers;
+const { getAllProjects, getOneProject, addProject, updateProject, deleteProject, addCollaborator, deleteCollaborator } = controllers;
 const router = express.Router()
 
 router.route('/')
@@ -16,8 +16,6 @@ router.route('/:id')
 
 router.post('/add-collaborator/:id', checkAuth, addCollaborator)
 router.post('/delete-collaborator/:id', checkAuth, deleteCollaborator)
-
-router.get('/tasks/:id', checkAuth, getAllTasks)
 
 module.exports = router;
 export {}
