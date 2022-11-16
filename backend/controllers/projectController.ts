@@ -14,12 +14,12 @@ const getOneProject = async (req, res) => {
   const project = await Project.findById(id)
 
   if (!project) {
-    const error = new Error('Proyecto no encontrado.')
+    const error = new Error('El proyecto no existe.')
     return res.status(404).json({ msg: error.message })
   }
   if (project.creator.toString() !== req.user._id.toString()) {
-    const error = new Error('Usuario no autorizado.')
-    return res.status(401).json({ msg: error.message })
+    const error = new Error('Usuario no autorizado para realizar esta acción.')
+    return res.status(403).json({ msg: error.message })
   }
 
   const tasks = await Task.find().where('project').equals(project._id)
@@ -38,7 +38,7 @@ const addProject = async (req, res) => {
     const storedProject = await project.save()
     res.json(storedProject)
   } catch (error) {
-    console.log(error)
+    throw new Error(error)
   }
 }
 
@@ -48,12 +48,12 @@ const updateProject = async (req, res) => {
   const project = await Project.findById(id)
 
   if (!project) {
-    const error = new Error('Proyecto no encontrado.')
+    const error = new Error('El proyecto no existe.')
     return res.status(404).json({ msg: error.message })
   }
   if (project.creator.toString() !== req.user._id.toString()) {
-    const error = new Error('Usuario no autorizado.')
-    return res.status(401).json({ msg: error.message })
+    const error = new Error('Usuario no autorizado para realizar esta acción.')
+    return res.status(403).json({ msg: error.message })
   }
 
   project.name = req.body.name || project.name;
@@ -75,12 +75,12 @@ const deleteProject = async (req, res) => {
   let project = await Project.findById(id)
 
   if (!project) {
-    const error = new Error('Proyecto no encontrado.')
+    const error = new Error('El proyecto no existe.')
     return res.status(404).json({ msg: error.message })
   }
   if (project.creator.toString() !== req.user._id.toString()) {
-    const error = new Error('Usuario no autorizado.')
-    return res.status(401).json({ msg: error.message })
+    const error = new Error('Usuario no autorizado para realizar esta acción.')
+    return res.status(403).json({ msg: error.message })
   }
 
   try {

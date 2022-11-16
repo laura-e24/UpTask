@@ -16,7 +16,10 @@ const register = async (req, res) => {
     const user = new User(req.body)
     user.token = generateId()
     const storedUser = await user.save()
-    res.json(storedUser)
+    res.json({
+      msg: 'Usuario creado correctamente. Revisá tu email para confirmar tu cuenta.',
+      user: storedUser
+    })
   } catch (error) {
     throw Error(error)
   }
@@ -45,7 +48,7 @@ const authenticate = async (req, res) => {
     })
   } else {
     const error = new Error('La contraseña es incorrecta.')
-    return res.status(403).json({ msg: error.message })
+    return res.status(401).json({ msg: error.message })
   }
 }
 
@@ -58,7 +61,7 @@ const confirmAccount = async (req, res) => {
   // Si no existe, el token es inválido
   if (!confirmUser) {
     const error = new Error('Token no válido.')
-    return res.status(403).json({ msg: error.message })
+    return res.status(401).json({ msg: error.message })
   }
 
    // Caso contrario...
@@ -92,7 +95,7 @@ const forgotPassword = async (req, res) => {
     await user.save()
     res.json({ msg: 'Hemos enviado un email con las indicaciones.' })
   } catch (error) {
-    console.log(error)
+    throw new Error(error)
   }
 }
 
@@ -105,8 +108,8 @@ const confirmToken = async (req, res) => {
     res.json({ msg: 'Token válido. El usuario existe.' })
   }
   else {
-    const error = new Error('Token inválido')
-    res.status(404).json({ msg: error.message })
+    const error = new Error('Token no válido')
+    res.status(401).json({ msg: error.message })
   }
 }
 
@@ -129,8 +132,8 @@ const newPassword = async (req, res) => {
     }
   }
   else {
-    const error = new Error('Token inválido.')
-    res.status(404).json({ msg: error.message })
+    const error = new Error('Token no válido.')
+    res.status(401).json({ msg: error.message })
   }
 }
 

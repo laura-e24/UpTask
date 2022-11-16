@@ -11,8 +11,8 @@ const addTask = async (req, res) => {
   }
 
   if (projectExists.creator.toString() !== req.user._id.toString()) {
-    const error = new Error('No tenés los permisos para añadir tareas.')
-    return res.status(401).json({ msg: error.message })
+    const error = new Error('Usuario no autorizado para realizar esta acción.')
+    return res.status(403).json({ msg: error.message })
   }
 
   try {
@@ -28,12 +28,12 @@ const getOneTask = async (req, res) => {
   const task = await Task.findById(id).populate('project')
   
   if (!task) {
-    const error = new Error('No existe la tarea.')
+    const error = new Error('La tarea no existe.')
     return res.status(404).json({ msg: error.message })
   }
 
   if (task.project.creator.toString() !== req.user._id.toString()) {
-    const error = new Error('No tenés los permisos para esta acción.')
+    const error = new Error('Usuario no autorizado para realizar esta acción.')
     return res.status(403).json({ msg: error.message })
   }
   
@@ -45,13 +45,13 @@ const updateTask = async (req, res) => {
   const task = await Task.findById(id).populate('project')
   
   if (!task) {
-    const error = new Error('No existe la tarea.')
+    const error = new Error('La tarea no existe.')
     return res.status(404).json({ msg: error.message })
   }
 
   if (task.project.creator.toString() !== req.user._id.toString()) {
-    const error = new Error('No tenés los permisos para esta acción.')
-    return res.status(401).json({ msg: error.message })
+    const error = new Error('Usuario no autorizado para realizar esta acción.')
+    return res.status(403).json({ msg: error.message })
   }
 
   task.name = req.body.name || task.name;
@@ -63,7 +63,7 @@ const updateTask = async (req, res) => {
     const storedTask = await task.save()
     res.json(storedTask)
   } catch (error) {
-    console.log(error)
+    throw new Error(error)
   }
 }
 
@@ -73,13 +73,13 @@ const deleteTask = async (req, res) => {
   const task = await Task.findById(id).populate('project')
 
   if (!task) {
-    const error = new Error('No existe la tarea.')
+    const error = new Error('La tarea no existe.')
     return res.status(404).json({ msg: error.message })
   }
 
   if (task.project.creator.toString() !== req.user._id.toString()) {
-    const error = new Error('Usuario no autorizado.')
-    return res.status(401).json({ msg: error.message })
+    const error = new Error('Usuario no autorizado para realizar esta acción.')
+    return res.status(403).json({ msg: error.message })
   }
 
   try {

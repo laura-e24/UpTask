@@ -17,7 +17,7 @@ const checkAuth = async (req, res, next) => {
       req.user = await User.findById(decoded.id).select('-password -confirmed -token -createdAt -updatedAt -__v')
       return next()
     } catch (error) {
-      return res.status(401).json({ msg: 'Token inválido.' })
+      return res.status(401).json({ msg: 'Token no válido.' })
     }
   }
 
