@@ -1,6 +1,7 @@
 const User = require('../models/User.ts')
 const generateId = require('../helpers/generateId.ts')
 const generateJWT = require('../helpers/generateJWT.ts')
+const registerEmail = require('../helpers/emails.ts')
 
 const register = async (req, res) => {
 
@@ -16,6 +17,14 @@ const register = async (req, res) => {
     const user = new User(req.body)
     user.token = generateId()
     const storedUser = await user.save()
+
+    // Envía email de confirmación
+    registerEmail({
+      email: user.email,
+      name: user.name,
+      token: user. token
+    })
+
     res.json({
       msg: 'Usuario creado correctamente. Revisá tu email para confirmar tu cuenta.',
       user: storedUser
@@ -61,7 +70,7 @@ const confirmAccount = async (req, res) => {
   // Si no existe, el token es inválido
   if (!confirmUser) {
     const error = new Error('Token no válido.')
-    return res.status(401).json({ msg: error.message })
+    return res.status(403).json({ msg: error.message })
   }
 
    // Caso contrario...
@@ -77,7 +86,7 @@ const confirmAccount = async (req, res) => {
     // Enviamos la respuesta final
     res.json({ msg: 'Usuario confirmado.' })
   } catch (error) {
-    return error
+    throw new Error(error)
   }
 }
 
@@ -109,7 +118,7 @@ const confirmToken = async (req, res) => {
   }
   else {
     const error = new Error('Token no válido')
-    res.status(401).json({ msg: error.message })
+    res.status(403).json({ msg: error.message })
   }
 }
 
@@ -133,7 +142,7 @@ const newPassword = async (req, res) => {
   }
   else {
     const error = new Error('Token no válido.')
-    res.status(401).json({ msg: error.message })
+    res.status(403).json({ msg: error.message })
   }
 }
 
