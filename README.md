@@ -1,2 +1,3 @@
-# UpTask-servidor
-Re-versión del proyecto anterior MERNTasks
+# UpTask
+
+Aplicación de gestión de proyectos
