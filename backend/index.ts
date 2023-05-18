@@ -14,18 +14,25 @@ dotenv.config()
 connectDB()
 
 // Configurar CORS
-const whitelist = [process.env.FRONTEND_URL]
+// const whitelist = [process.env.FRONTEND_URL, 'http://localhost:4000', '*']
+// const corsOptions = {
+//   origin: (origin, callback) => {
+//     if (whitelist.includes(origin)) {
+//       // Puede consultar la API
+//       callback(null, true)
+//     } else {
+//       // No puede consultar la API
+//       callback(new Error('Error de CORS'))
+//     }
+//   }
+// }
+
 const corsOptions = {
-  origin: (origin, callback) => {
-    if (whitelist.includes(origin)) {
-      // Puede consultar la API
-      callback(null, true)
-    } else {
-      // No puede consultar la API
-      callback(new Error('Error de CORS'))
-    }
-  }
-}
+  origin: [process.env.FRONTEND_URL, 'http://localhost:4000', '*'],
+  credentials: true,
+  methods: "GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE",
+  allowedHeaders: ['Content-Type']
+};
 
 app.use(cors(corsOptions))
 

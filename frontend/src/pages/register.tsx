@@ -170,7 +170,7 @@ const Register = () => {
       </form>
       <nav className="lg:flex lg:justify-between">
         <Link
-          to='/login'
+          to='/'
           className="block text-center my-5 text-slate-500 uppercase text-sm"
         >
           ¿Ya tenés una cuenta? Iniciá sesión
@@ -179,7 +179,7 @@ const Register = () => {
           to='/forgot-password'
           className="block text-center my-5 text-slate-500 uppercase text-sm"
         >
-          ¿Te olvidaste la contraseña? JAJA pelotudo, recuperala
+          ¿Te olvidaste la contraseña? Recuperala
         </Link>
       </nav>
     </>

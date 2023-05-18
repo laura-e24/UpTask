@@ -30,16 +30,16 @@ const ForgotPassword = () => {
       </form>
       <nav className="lg:flex lg:justify-between">
         <Link
-          to='/login'
+          to='/'
           className="block text-center my-5 text-slate-500 uppercase text-sm"
         >
           ¿Ya tenés una cuenta? Iniciá sesión
         </Link>
         <Link
-          to='register'
+          to='/register'
           className="block text-center my-5 text-slate-500 uppercase text-sm"
         >
-          ¿No tenés una cuenta? Sos un gil, registrate
+          ¿No tenés una cuenta? Registrate
         </Link>
       </nav>
     </>

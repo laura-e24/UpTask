@@ -11,7 +11,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        // Área pública, rutas que todos pueden acceder
+        {/* Área pública, rutas que todos pueden acceder */}
         <Route path='/' element={<AuthLayout />}>
           <Route index element={<Login />} />
           <Route path='register' element={<Register />} />

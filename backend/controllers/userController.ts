@@ -22,10 +22,10 @@ const register = async (req, res) => {
     registerEmail({
       email: user.email,
       name: user.name,
-      token: user. token
+      token: user.token
     })
 
-    res.json({
+    res.status(201).json({
       msg: 'Usuario creado correctamente. Revisá tu email para confirmar tu cuenta.',
       user: storedUser
     })
@@ -79,12 +79,12 @@ const confirmAccount = async (req, res) => {
     confirmUser.confirmed = true;
     // Reseteamos el token ya que es de un único uso
     confirmUser.token = '';
-    // Almcenamos en la DB
+    // Almacenamos en la DB
     // --- sin esta línea NO se actualizan los datos en la DB ---
     await confirmUser.save()
     
     // Enviamos la respuesta final
-    res.json({ msg: 'Usuario confirmado.' })
+    res.status(200).json({ msg: 'Usuario confirmado.' })
   } catch (error) {
     throw new Error(error)
   }

@@ -46,13 +46,13 @@ const Login = () => {
           to='/register'
           className="block text-center my-5 text-slate-500 uppercase text-sm"
         >
-          ¿No tenés una cuenta? Sos un gil, registrate
+          ¿No tenés una cuenta? Registrate
         </Link>
         <Link
           to='/forgot-password'
           className="block text-center my-5 text-slate-500 uppercase text-sm"
         >
-          ¿Te olvidaste la contraseña? JAJA pelotudo, recuperala
+          ¿Te olvidaste la contraseña? Recuperala
         </Link>
       </nav>
     </>

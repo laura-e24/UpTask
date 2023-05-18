@@ -49,7 +49,7 @@ const ConfirmAccount = () => {
         {msg && <Alert alert={alert} />}
         {confirmedAccount && (
           <Link
-            to='/login'
+            to='/'
             className="block text-center my-5 text-slate-500 uppercase text-sm"
           >
             Iniciá sesión
